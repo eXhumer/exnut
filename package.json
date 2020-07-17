@@ -1,0 +1,19 @@
+{
+    "name": "exnut",
+    "version": "1.0.0",
+    "description": "A simple \"NUT\" server for Tinfoil client",
+    "main": "exnut.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "eXhumer",
+    "license": "GPL-3.0-only",
+    "dependencies": {
+        "bcrypt": "^5.0.0",
+        "express": "^4.17.1",
+        "passport": "^0.4.1",
+        "passport-http": "^0.3.0"
+    },
+    "devDependencies": {}
+}
