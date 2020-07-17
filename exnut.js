@@ -24,11 +24,3 @@ passport.use(new BasicStrategy(verifyUser));
 exnut.get("/", (req, res) => {res.send("Hello World!");});
 
 exnut.listen(config.server.port, () => console.log(`exnut server started listening on port ${config.server.port}`));
-
-/* TODO
- * 1) Add server endpoints expected from a NUT server
- * 2) Proper NUT like USB communication with Tinfoil client locally connected
- * ~~3) Add auth system for all requests~~ Implemented with passport/passport-http
- * 4) Add proper support for ranged/chunked downloads
- * 5) wowsuchdoge/doge like (but better) front end with ReactJS
- */
