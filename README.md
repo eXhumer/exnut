@@ -1,4 +1,5 @@
 # exnut
+A simple \"NUT\" server made with ExpressJS for Tinfoil client
 
 ## TODOs
 * Add server endpoints expected from a NUT server
