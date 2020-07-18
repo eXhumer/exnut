@@ -10,7 +10,7 @@ if(config.server.requireAuth)
 router
     .route("/api/user/")
     .get((req, res) => {
-        const auth = Buffer.from(req.headers.authorization.split(" ")[1], "base64").toString("ucs2").split(":");
+        const auth = Buffer.from(req.headers.authorization.split(" ")[1], "base64").toString("utf-8").split(":");
         res.json({
             "id": auth[0],
             "password": auth[1],
