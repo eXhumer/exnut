@@ -9,7 +9,18 @@ if(config.server.requireAuth)
 
 router
     .route("/api/user/")
-    .get((req, res) => {res.json({"id": "user", "password": "test", "isAdmin": false, "remoteAddr": "3", "requireAuth": true, "switchHost": "2", "switchPort": 1});});
+    .get((req, res) => {
+        const auth = Buffer.from(req.headers.authorization.split(" ")[1], "base64").toString("ucs2").split(":");
+        res.json({
+            "id": auth[0],
+            "password": auth[1],
+            "isAdmin": false,
+            "remoteAddr": "3",
+            "requireAuth": config.server.requireAuth,
+            "switchHost": "2",
+            "switchPort": 1
+        });
+    });
 
 router
     .route("/api/search/")
