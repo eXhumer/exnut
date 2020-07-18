@@ -1,2 +1,4 @@
 node_modules/
 package-lock.json
+conf/credentials.json
+conf/gdrive.token

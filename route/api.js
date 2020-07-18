@@ -1,5 +1,7 @@
+const fs = require("fs");
 const express = require("express");
 const auth = require("./auth");
+const googleDriveService = require("../gdrive");
 const config = require("../config");
 
 const router = express.Router();
@@ -36,7 +38,16 @@ router
 
 router
     .route("/api/gdriveToken/")
-    .get((req, res) => {res.json({"access_token": "", "refresh_token": "", "credentials": ""});});
+    .get(async (req, res) => {
+        const gdriveService = await googleDriveService();
+        if(gdriveService) {
+            const credentials = JSON.parse(fs.readFileSync(__dirname + "/../conf/credentials.json"));
+            const token = JSON.parse(fs.readFileSync(__dirname + "/../conf/gdrive.token"));
+            res.json({"access_token": token.access_token, "refresh_token": token.refresh_token, "credentials": credentials});
+            return;
+        }
+        res.status(401).json({"success": false, "result": "Web server missing Google authorization credentials"})
+    });
 
 router
     .route("/api/titleImage/:titleId/")
