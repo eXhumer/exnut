@@ -1,11 +1,9 @@
+const path = require("path");
+const fs = require("fs");
 const bcrypt = require("bcrypt");
 
-const users = [
-    {
-        username: "guest",
-        passhash: "$2b$12$ugY8/RzW/wo8q756DGUAZOyW9l1L9P03zLU/iLYb.B7kYM9zHDHLm" // guest (bcrypt with 12 salt rounds)
-    }
-];
+const USER_PATH = path.join(__dirname, "conf/user.conf");
+const users = JSON.parse(fs.readFileSync(USER_PATH), "utf-8");
 
 module.exports = {
     getUser: username => {

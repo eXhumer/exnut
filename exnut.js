@@ -1,9 +1,7 @@
 const exnut = require("express")();
-const config = require("./conf/config");
-const root = require("./route/root");
-const api = require("./route/api");
+const config = require("./config");
+const router = require("./route/router");
 
-exnut.use(root);
-exnut.use(api);
+exnut.use(router);
 
-exnut.listen(config.server.port, () => console.log(`exnut server started listening on port ${config.server.port}`));
+exnut.listen(config.server.port, config.server.hostname, () => console.log(`exnut server started on http://${config.server.hostname}:${config.server.port}/`));
