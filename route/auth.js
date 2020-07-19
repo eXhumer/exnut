@@ -1,7 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const BasicStrategy = require("passport-http").BasicStrategy;
-const users = require("../users");
+const users = require("../server/users");
 
 const router = express.Router();
 

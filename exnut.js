@@ -1,5 +1,5 @@
 const exnut = require("express")();
-const config = require("./config");
+const config = require("./server/config");
 const router = require("./route/router");
 
 exnut.use(router);

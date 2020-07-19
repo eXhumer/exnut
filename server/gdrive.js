@@ -1,4 +1,5 @@
-const fs = require("fs");
+const fs = require("fs/promises");
+const {constants} = require("fs");
 const {stdin, stdout} = process;
 const {google} = require("googleapis");
 
@@ -14,14 +15,15 @@ const promptAnswer = (question) => {
 const googleDriveService = async () => {
     // return false if app credentials doesn't exist
     try {
-        fs.accessSync("conf/credentials.json", fs.constants.F_OK);
+        await fs.access("conf/credentials.json", constants.R_OK);
     } catch (error) {
         console.log(error);
         return false;
     }
 
     // load app creds
-    const credentials = JSON.parse(fs.readFileSync("conf/credentials.json"));
+    const credentialsStr = await fs.readFile("conf/credentials.json");
+    const credentials = JSON.parse(credentialsStr);
     const {
         client_secret,
         client_id,
@@ -33,7 +35,8 @@ const googleDriveService = async () => {
     
     try {
         // try reading from existing token, if it exists
-        const token = JSON.parse(fs.readFileSync("conf/gdrive.token"));
+        const tokenStr = await fs.readFile("conf/gdrive.token");
+        const token = JSON.parse(tokenStr);
         oauth2Client.setCredentials(token);
     } catch(err) {
         // new token if error occurs while reading token from file
@@ -48,7 +51,7 @@ const googleDriveService = async () => {
     }
 
     // save access_token/refresh_token to file (caching for later quicker use)
-    fs.writeFileSync("conf/gdrive.token", JSON.stringify({
+    await fs.writeFile("conf/gdrive.token", JSON.stringify({
         access_token: oauth2Client.credentials.access_token,
         refresh_token: oauth2Client.credentials.refresh_token
     }));

@@ -3,11 +3,9 @@ const { constants } = require("fs");
 const path = require("path");
 const express = require("express");
 const auth = require("./auth");
-const googleDriveService = require("../gdrive");
-const config = require("../config");
-const titledb = require("../titledb");
-
-const isWindows = process.platform === "win32";
+const googleDriveService = require("../server/gdrive");
+const config = require("../server/config");
+const titledb = require("../server/titledb");
 
 const router = express.Router();
 
