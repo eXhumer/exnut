@@ -5,6 +5,7 @@ const express = require("express");
 const auth = require("./auth");
 const googleDriveService = require("../gdrive");
 const config = require("../config");
+const titledb = require("../titledb");
 
 const isWindows = process.platform === "win32";
 
@@ -53,6 +54,7 @@ router
             }
         }
         if(scanPromises.length > 0) {
+            const loadTitleDbSuccess = await titledb.loadTitleDb();
             const scannedFilesArr = await Promise.all(scanPromises);
             const scannedFiles = scannedFilesArr[0];
             const nswRegex = /^(?:([\S]+)\s*)?\[([A-Fa-f\d]{16})\]\s*(?:\[([A-Z]{2})\]\s*)?\[v([\d]+)\](?:\s*\[CR-(\d{2})\])?.(nsp|nsz|xci|xcz)$/;
@@ -61,7 +63,14 @@ router
                 const arr = await res;
                 const regexMatch = path.basename(file).match(nswRegex);
                 if(regexMatch) {
-                    arr.push({id: regexMatch[2], name: file, version: Number(regexMatch[4])})
+                    const titleInfo = {id: regexMatch[2], name: file, version: Number(regexMatch[4])};
+                    if(loadTitleDbSuccess) {
+                        const titleLatestVer = titledb.getTitleLatestVersion(regexMatch[2]);
+                        if(titleLatestVer !== null) {
+                            Object.assign(titleInfo, {latest: titleLatestVer});
+                        }
+                    }
+                    arr.push(titleInfo);
                 }
                 return arr;
             }, scannedTitles);
