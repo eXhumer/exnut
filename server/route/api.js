@@ -3,9 +3,9 @@ const { constants } = require("fs");
 const path = require("path");
 const express = require("express");
 const auth = require("./auth");
-const googleDriveService = require("../server/gdrive");
-const config = require("../server/config");
-const titledb = require("../server/titledb");
+const googleDriveService = require("../gdrive");
+const config = require("../config");
+const titledb = require("../titledb");
 
 const router = express.Router();
 

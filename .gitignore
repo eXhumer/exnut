@@ -1,4 +1,4 @@
 node_modules/
-conf/credentials.json
-conf/gdrive.token
-conf/files.conf
+server/conf/credentials.json
+server/conf/gdrive.token
+server/conf/files.conf

@@ -1,6 +1,6 @@
 const express = require("express");
-const root = require("./root");
-const api = require("./api");
+const root = require("./route/root");
+const api = require("./route/api");
 
 const router = express.Router();
 
